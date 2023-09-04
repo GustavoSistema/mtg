@@ -23,7 +23,7 @@ class guardarArchivosEnExpediente implements ShouldQueue
      */
     protected $expediente,$certificacion;
 
-
+    //Define el expediente y la certificación para que se guarden los archivos.
     public function __construct(Expediente $expe, Certificacion $certi)
     {
         $this->expediente=$expe;
@@ -37,6 +37,7 @@ class guardarArchivosEnExpediente implements ShouldQueue
      */
     public function handle()
     {
+
         $expediente=$this->expediente;
         $certificacion=$this->certificacion;
         $this->guardarFichaTecnica($certificacion,$expediente);

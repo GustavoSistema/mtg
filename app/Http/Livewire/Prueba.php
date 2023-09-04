@@ -281,7 +281,9 @@ class Prueba extends Component
                             'servicio_idservicio'=>$servicio->id,
                         ]);                        
                         $this->guardarFotos($expe);
-                        guardarArchivosEnExpediente::dispatch($expe,$certi);                       
+                        //CARGA JOB PARA GUARDAR ARCHIVOS EN EL EXPEDIENTE
+                        guardarArchivosEnExpediente::dispatch($expe,$certi); 
+                        //Crea un servicio material                      
                         $certEx=CertifiacionExpediente::create(["idCertificacion"=>$certi->id,"idExpediente"=>$expe->id]);
                         $this->emit("minAlert", ["titulo" => "¡EXCELENTE TRABAJO!", "mensaje" => "Tu certificado N°: " . $certi->Hoja->numSerie . " esta listo.", "icono" => "success"]);
                     } else {
@@ -370,7 +372,7 @@ class Prueba extends Component
         }
     }
     
-
+    //funcion para guardar las fotos del expediente en el storage local.
     public function guardarFotos(Expediente $expe){
         $this->validate(["imagenes"=>"nullable|array","imagenes.*"=>"image"]);
         if(count($this->imagenes)){

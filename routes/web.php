@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])
     Route::get('/Expedientes',Expedientes::class)->middleware('can:expedientes')->name('expedientes');
     //Route::get('/Servicio',Servicio::class)->middleware('can:servicio')->name('servicio');
     Route::get('/Talleres',Talleres::class)->middleware('can:talleres')->name('talleres');
+    //Route::get('/Talleres', Talleres::class)->name('talleres')->middleware('auth');
     Route::get('/Ingresos',Ingresos::class)->middleware('can:ingresos')->name('ingresos');
     Route::get('/Salidas',Salidas::class)->middleware('can:salidas')->name('salidas');
     Route::get('/Inventario',Inventario::class)->middleware('can:inventario')->name('inventario');
@@ -83,7 +84,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified'])
    
     Route::get('/Solicitud/{soliId}',VistaSolicitud::class)->name('vistaSolicitud');
    
-    Route::get('/Servicio',Prueba::class)->middleware('can:servicio')->name('servicio');
+    Route::get('/Servicio',Prueba::class)->middleware('can:servicio')->name('servicio'); 
     
     Route::get('/Solucion',Arreglando::class)->name('solucion');
     Route::get('/TalleresRevision',TallerRevision::class)->name('talleres.revision');

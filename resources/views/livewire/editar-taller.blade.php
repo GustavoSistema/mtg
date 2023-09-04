@@ -1,8 +1,10 @@
 <div class="lg:w-5/6 pt-4 w-full m-auto">
     <div class="mt-12 w-full">
-        <h1 class="text-2xl font-bold my-6 text-indigo-500 text-center"><i class="fas fa-pen pr-2"></i>  DATOS DEL TALLER </h1>  
-    </div>  
-    <div class="bg-indigo-300 bg-opacity-25 md:p-4 m-4 grid grid-cols-1 md:grid-cols-2 space-x-4  rounded-md shadow-md border ">        
+        <h1 class="text-2xl font-bold my-6 text-indigo-500 text-center"><i class="fas fa-pen pr-2"></i> DATOS DEL TALLER
+        </h1>
+    </div>
+    <div
+        class="bg-indigo-300 bg-opacity-25 md:p-4 m-4 grid grid-cols-1 md:grid-cols-2 space-x-4  rounded-md shadow-md border ">
         <div class="px-4 pt-4">
             <div class="mb-4">
                 <x-jet-label value="Nombre:" />
@@ -72,13 +74,12 @@
 
         </div>
 
-        <div class="px-4 pt-4">            
+        <div class="px-4 pt-4">
             <div class="mb-4 w-full">
-                <x-jet-label value="Logo:" />               
-                <input class="relative m-0 block w-full min-w-0 flex-auto rounded border  shadow-sm bg-indigo-300  bg-clip-padding px-3 py-2 text-base font-normal text-white transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-indigo-500 file:px-3 file:py-2 file:text-white file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-indigo-700 focus:border-primary focus:text-white focus:shadow-te-primary focus:outline-none "
-                    type="file" wire:model="logoNuevo"
-                    accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff"
-                     />
+                <x-jet-label value="Logo:" />
+                <input
+                    class="relative m-0 block w-full min-w-0 flex-auto rounded border  shadow-sm bg-indigo-300  bg-clip-padding px-3 py-2 text-base font-normal text-white transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-indigo-500 file:px-3 file:py-2 file:text-white file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-indigo-700 focus:border-primary focus:text-white focus:shadow-te-primary focus:outline-none "
+                    type="file" wire:model="logoNuevo" accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff" />
                 <x-jet-input-error for="logoNuevo" />
             </div>
             <div wire:loading wire:target="logoNuevo"
@@ -121,10 +122,9 @@
 
             <div class="mb-4">
                 <x-jet-label value="Firma:" />
-                <input class="relative m-0 block w-full min-w-0 flex-auto rounded border  shadow-sm bg-indigo-300  bg-clip-padding px-3 py-2 text-base font-normal text-white transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-indigo-500 file:px-3 file:py-2 file:text-white file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-indigo-700 focus:border-primary focus:text-white focus:shadow-te-primary focus:outline-none "
-                    type="file" wire:model="firmaNuevo"
-                    accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff"
-                     />                
+                <input
+                    class="relative m-0 block w-full min-w-0 flex-auto rounded border  shadow-sm bg-indigo-300  bg-clip-padding px-3 py-2 text-base font-normal text-white transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-indigo-500 file:px-3 file:py-2 file:text-white file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-indigo-700 focus:border-primary focus:text-white focus:shadow-te-primary focus:outline-none "
+                    type="file" wire:model="firmaNuevo" accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff" />
                 <x-jet-input-error for="firmaNuevo" />
             </div>
             <div wire:loading wire:target="firmaNuevo"
@@ -166,14 +166,54 @@
                 @endif
             @endif
         </div>
+
+        @if ($taller)
+        {{-- ESTE DIV CONTIENE TODOS LOS SERVICIOS SI EL USUARIO ES DE LOS QUE ESTA DEFINIDOS ANTES LO MOTRARA O OCULTARA--}}
+        <div class="{{ $us ? 'block' : 'hidden' }}">        
+            @if (count($taller->servicios))
+                    <h1 class="font-bold text-lg"> Servicios</h1>
+                    <hr class="my-4">
+                    <div class="mb-4" wire:loading.attr="disabled" wire:target="actualizar">
+                        @foreach ($taller->servicios as $key => $serv)
+                            <div class="flex flex-row justify-between bg-indigo-100 my-2 items-center rounded-lg p-2">
+                                <div class="">
+                                    <input wire:model="taller.servicios.{{ $key }}.estado"
+                                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white outline-transparent checked:bg-indigo-600 checked:border-indigo-600 outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        type="checkbox">
+                                    <label class="form-check-label inline-block text-gray-800">
+                                        {{ $serv->tiposervicio->descripcion }}
+                                    </label>
+                                </div>
+                                <div class="flex flex-row items-center">
+                                    <x-jet-label value="precio:" />
+                                    <x-jet-input type="number" class="w-6px"
+                                        wire:model="taller.servicios.{{ $key }}.precio" />
+                                </div>
+                            </div>
+                            <x-jet-input-error for="taller.servicios.{{ $key }}.estado" />
+                            <x-jet-input-error for="taller.servicios.{{ $key }}.precio" />
+                        @endforeach
+                    </div>
+                @else
+                    <hr>
+                    <div class="w-full items-center mt-2 justify-center text-center py-2 ">
+                        <h1 class="text-xs text-gray-500 ">El taller no cuenta con servicios registrados</h1>
+                    </div>
+                @endif
+           
+            @endif
+        </div>
     </div>
 
+
+
+
     <div class="w-full px-4 py-8 flex justify-center space-x-4 ">
-        @hasanyrole('administrador')
-        <x-jet-secondary-button wire:click="cancelar" class="mx-2">
-            Cancelar
-        </x-jet-secondary-button>     
-        @endhasanyrole   
+       
+            <x-jet-secondary-button wire:click="cancelar" class="mx-2">
+                Cancelar
+            </x-jet-secondary-button>
+       
         <x-jet-button wire:click="actualizar" wire:loading.attr="disabled" wire:target="update">
             Actualizar
         </x-jet-button>
@@ -188,10 +228,10 @@
         <hr class="my-4">
         @if (isset($taller->Documentos))
             <div>
-                @livewire('documentos-taller', ['idTaller' => $taller->id], key($taller->nombre.'-'.$taller->id))
+                @livewire('documentos-taller', ['idTaller' => $taller->id], key($taller->nombre . '-' . $taller->id))
             </div>
         @endif
     </div>
 
-    
+
 </div>

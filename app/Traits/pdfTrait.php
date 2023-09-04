@@ -9,9 +9,11 @@ use App\Models\Imagen;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 
+//Trait para guardar los PDF.
+
 trait pdfTrait
 {
-
+    //Funcion para guardar ficha tecnica
     public function guardarFichaTecnica(Certificacion $certi, Expediente $expe)
     {
         $data = $this->datosParaFichaTecnica($certi);
@@ -28,6 +30,8 @@ trait pdfTrait
         ]);        
     }
 
+
+    //genera datos para el pdf de la ficha tecnica.
     public function datosParaFichaTecnica(Certificacion $certificacion)
     {
         $chip = $certificacion->vehiculo->Equipos->where("idTipoEquipo", 1)->first();
@@ -51,6 +55,8 @@ trait pdfTrait
         return $data;
     }
 
+
+    //Funcion para guardar certificado
     public function guardaCertificado(Certificacion $certi, Expediente $expe){
         switch ($certi->Servicio->tipoServicio->id) {
             case 1: //tipo servicio = inicial gnv
@@ -85,6 +91,8 @@ trait pdfTrait
         }        
         
     }
+
+     //Funcion para generar y guardar pdf anual de GNV
     public function guardarPdfAnualGnv(Certificacion $certificacion,Expediente $expe){        
             
                     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
@@ -114,6 +122,8 @@ trait pdfTrait
                     ]);
     }
 
+
+    //Funcion para generar y guardar pdf inicial de GNV
     public function guardarPdfInicialGnv(Certificacion $certificacion,Expediente $expe){        
            
                     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
